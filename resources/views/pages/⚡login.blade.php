@@ -5,23 +5,23 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 
 new #[Layout('layouts::auth')] #[Title('Login')] class extends Component {
-    public string $email = '';
+    public string $username = '';
     public string $password = '';
     public bool $remember = false;
 
     public function login()
     {
         $validated = $this->validate([
-            'email' => 'required|email',
+            'username' => 'required|string',
             'password' => 'required',
         ]);
 
-        if (auth()->attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
+        if (auth()->attempt(['username' => $this->username, 'password' => $this->password], $this->remember)) {
             session()->regenerate();
             return $this->redirect(route('cashier'), navigate: true);
         }
 
-        $this->addError('email', 'Email atau password salah.');
+        $this->addError('username', 'Username atau password salah.');
     }
 }; ?>
 
@@ -35,11 +35,11 @@ new #[Layout('layouts::auth')] #[Title('Login')] class extends Component {
 
             <form wire:submit="login" class="space-y-6">
                 <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                    <input type="email" id="email" wire:model="email"
+                    <label for="username" class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                    <input type="text" id="username" wire:model="username"
                         class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                        placeholder="nama@email.com">
-                    @error('email')
+                        placeholder="nama pengguna">
+                    @error('username')
                         <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
                     @enderror
                 </div>
