@@ -13,12 +13,4 @@ Route::middleware('auth')->group(function () {
     Route::livewire('/products', 'pages::⚡products')->name('products.index');
     Route::livewire('/categories', 'pages::⚡categories')->name('categories.index');
     Route::livewire('/customers', 'pages::⚡customers')->name('customers.index');
-
-    // Logout
-    Route::post('/logout', function () {
-        auth()->logout();
-        request()->session()->invalidate();
-        request()->session()->regenerateToken();
-        return redirect()->route('login');
-    })->name('logout');
 });
